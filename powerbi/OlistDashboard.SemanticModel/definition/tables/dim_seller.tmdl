@@ -1,0 +1,37 @@
+table dim_seller
+	lineageTag: 7b0e9864-6f95-59df-b5fc-37ed04e42ee1
+
+	column seller_id
+		dataType: string
+		summarizeBy: none
+		lineageTag: 806195dd-d9b9-5b3b-849e-f78aab7ce342
+		sourceColumn: seller_id
+
+	column state
+		dataType: string
+		summarizeBy: none
+		lineageTag: 894b7238-196d-50b9-ba2e-b2eb6b33e9cd
+		sourceColumn: state
+
+	column city
+		dataType: string
+		summarizeBy: none
+		lineageTag: 4d3c9efe-d6dd-516b-afcc-7a35f49457aa
+		sourceColumn: city
+
+	column region
+		dataType: string
+		summarizeBy: none
+		lineageTag: faa57175-e7e8-5213-b779-4746b5638aec
+		sourceColumn: region
+
+	partition dim_seller = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_seller.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"seller_id", type text}, {"state", type text}, {"city", type text}, {"region", type text}}, "en-US")
+				in
+				    Typed

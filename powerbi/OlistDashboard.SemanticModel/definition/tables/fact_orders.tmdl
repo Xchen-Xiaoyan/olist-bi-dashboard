@@ -1,0 +1,167 @@
+table fact_orders
+	lineageTag: 1f4fba68-27a3-51ce-9cf3-30359fa794de
+
+	column order_id
+		dataType: string
+		summarizeBy: none
+		lineageTag: 301e61d0-de8d-567e-93e1-513b57226033
+		sourceColumn: order_id
+
+	column customer_unique_id
+		dataType: string
+		summarizeBy: none
+		lineageTag: 35e06b5a-69c1-54c5-a760-6b5016e43b5f
+		sourceColumn: customer_unique_id
+
+	column order_status
+		dataType: string
+		summarizeBy: none
+		lineageTag: 7a2f5647-d27d-561f-838d-93f1d4654fc8
+		sourceColumn: order_status
+
+	column purchase_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		lineageTag: 76d232d6-13c0-5929-a6d2-29f81112a9c0
+		sourceColumn: purchase_date
+
+	column is_valid
+		dataType: boolean
+		summarizeBy: none
+		lineageTag: 950d9880-7e89-5b3d-a27f-651e3faae974
+		sourceColumn: is_valid
+
+	column is_delivered
+		dataType: boolean
+		summarizeBy: none
+		lineageTag: a711cbd2-244b-5eee-a2b1-64cdb06a33a7
+		sourceColumn: is_delivered
+
+	column is_on_time
+		dataType: boolean
+		summarizeBy: none
+		lineageTag: c17b3e4c-8436-54ee-b661-711fe98ec669
+		sourceColumn: is_on_time
+
+	column delivery_days
+		dataType: double
+		summarizeBy: none
+		lineageTag: 82e1ac8c-8ce0-53b6-b4e8-96a52c9aacb1
+		sourceColumn: delivery_days
+
+	column days_vs_estimate
+		dataType: double
+		summarizeBy: none
+		lineageTag: de62ec5d-154c-5ed8-b0f4-411206f7fb4a
+		sourceColumn: days_vs_estimate
+
+	column n_items
+		dataType: int64
+		summarizeBy: none
+		lineageTag: 67b0a32e-ddff-500e-bad0-b3b40b84227e
+		sourceColumn: n_items
+
+	column n_sellers
+		dataType: double
+		summarizeBy: none
+		lineageTag: d5da0d80-48e1-59fa-8baa-f9630b5e932d
+		sourceColumn: n_sellers
+
+	column item_value
+		dataType: double
+		summarizeBy: sum
+		lineageTag: 0a35eb82-7c9c-5fe9-b2f1-15ca03552b7f
+		sourceColumn: item_value
+
+	column freight_value
+		dataType: double
+		summarizeBy: sum
+		lineageTag: 2ad6c730-6149-5020-b649-c7f04c9fc64c
+		sourceColumn: freight_value
+
+	column order_value
+		dataType: double
+		summarizeBy: sum
+		lineageTag: 78599068-4427-560d-9830-83a39a3fa2aa
+		sourceColumn: order_value
+
+	column main_payment_type
+		dataType: string
+		summarizeBy: none
+		lineageTag: d162bf77-5488-5a8e-ab6f-d51864c0d6b8
+		sourceColumn: main_payment_type
+
+	column installments
+		dataType: int64
+		summarizeBy: none
+		lineageTag: 282807d7-ef0b-5468-a6eb-6d1dd8c1decd
+		sourceColumn: installments
+
+	column payment_value
+		dataType: double
+		summarizeBy: sum
+		lineageTag: c86334c7-7f9e-5bee-8ad0-8373e26dd98e
+		sourceColumn: payment_value
+
+	column review_score
+		dataType: double
+		summarizeBy: none
+		lineageTag: 310a6300-527f-52fa-927d-087255eb28a2
+		sourceColumn: review_score
+
+	column buyer_order_seq
+		dataType: int64
+		summarizeBy: none
+		isHidden
+		lineageTag: e1332956-5c21-5ff3-a4cc-c9bfd5c60695
+		sourceColumn: buyer_order_seq
+
+	column is_first_order
+		dataType: boolean
+		summarizeBy: none
+		lineageTag: 764c7f17-455b-5c64-882c-e275b67ef0f9
+		sourceColumn: is_first_order
+
+	column delivery_status
+		dataType: string
+		summarizeBy: none
+		lineageTag: d5e11bd0-d691-5a2e-a5d7-bf69e9ee3e7a
+		sourceColumn: delivery_status
+
+	column lateness_bucket
+		dataType: string
+		summarizeBy: none
+		sortByColumn: lateness_order
+		lineageTag: 83f34c80-059d-5414-8449-ede39c61d607
+		sourceColumn: lateness_bucket
+
+	column lateness_order
+		dataType: int64
+		summarizeBy: none
+		isHidden
+		lineageTag: b6fefde2-efbf-5192-be12-5224a5fafe3c
+		sourceColumn: lateness_order
+
+	column is_approved
+		dataType: boolean
+		summarizeBy: none
+		lineageTag: 54397b0b-e57d-5af5-b317-cf5a3d7a73e2
+		sourceColumn: is_approved
+
+	column is_shipped
+		dataType: boolean
+		summarizeBy: none
+		lineageTag: cad5d104-6298-5630-ba0d-59529f41304b
+		sourceColumn: is_shipped
+
+	partition fact_orders = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_orders.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"order_id", type text}, {"customer_unique_id", type text}, {"order_status", type text}, {"purchase_date", type date}, {"is_valid", type logical}, {"is_delivered", type logical}, {"is_on_time", type logical}, {"delivery_days", type number}, {"days_vs_estimate", type number}, {"n_items", Int64.Type}, {"n_sellers", type number}, {"item_value", type number}, {"freight_value", type number}, {"order_value", type number}, {"main_payment_type", type text}, {"installments", Int64.Type}, {"payment_value", type number}, {"review_score", type number}, {"buyer_order_seq", Int64.Type}, {"is_first_order", type logical}, {"delivery_status", type text}, {"lateness_bucket", type text}, {"lateness_order", Int64.Type}, {"is_approved", type logical}, {"is_shipped", type logical}}, "en-US")
+				in
+				    Typed

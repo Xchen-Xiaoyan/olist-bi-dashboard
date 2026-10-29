@@ -1,0 +1,133 @@
+table '指标'
+	lineageTag: 65a34ce3-4358-5c47-960c-e0bf014894b9
+
+	measure GMV = CALCULATE(SUM(fact_orders[order_value]), fact_orders[is_valid] = TRUE())
+		formatString: #,0
+		displayFolder: 1 规模
+		lineageTag: b384e576-1d8e-5200-bc4b-2858af8092f8
+
+	measure '订单数' = CALCULATE(COUNTROWS(fact_orders), fact_orders[is_valid] = TRUE())
+		formatString: #,0
+		displayFolder: 1 规模
+		lineageTag: 6f15165d-b967-5e71-a0b5-0217675830b2
+
+	measure '买家数' = CALCULATE(DISTINCTCOUNT(fact_orders[customer_unique_id]), fact_orders[is_valid] = TRUE())
+		formatString: #,0
+		displayFolder: 1 规模
+		lineageTag: af3dee56-740e-5224-bf7e-3b93e5580241
+
+	measure '客单价' = DIVIDE([GMV], [订单数])
+		formatString: #,0.0
+		displayFolder: 1 规模
+		lineageTag: 9614a9ef-614f-5bdd-9927-b4b09765559e
+
+	measure '人均订单数' = DIVIDE([订单数], [买家数])
+		formatString: 0.000
+		displayFolder: 1 规模
+		lineageTag: 1610ef00-759a-51e6-a4e9-f9e09f0626f0
+
+	measure '上月GMV' = CALCULATE([GMV], DATEADD(dim_date[date], -1, MONTH))
+		formatString: #,0
+		displayFolder: 2 增长
+		lineageTag: 4333b88a-fc59-591f-a4c3-25ab1a508df6
+
+	measure 'GMV环比' = DIVIDE([GMV] - [上月GMV], [上月GMV])
+		formatString: 0.0%
+		displayFolder: 2 增长
+		lineageTag: da595d05-8758-502a-8344-9456fe2bf562
+
+	measure '去年同期GMV' = CALCULATE([GMV], SAMEPERIODLASTYEAR(dim_date[date]))
+		formatString: #,0
+		displayFolder: 2 增长
+		lineageTag: 0ca3a5ea-cbc5-583d-aa43-7b2f1d99f89c
+
+	measure 'GMV同比' = DIVIDE([GMV] - [去年同期GMV], [去年同期GMV])
+		formatString: 0.0%
+		displayFolder: 2 增长
+		lineageTag: d49ed000-b722-57c9-aea6-e551ab0f36ab
+
+	measure '新买家数' = CALCULATE([买家数], fact_orders[is_first_order] = TRUE())
+		formatString: #,0
+		displayFolder: 2 增长
+		lineageTag: 0de0bc29-cd48-59d5-ade6-f222ecab7b18
+
+	measure '新买家GMV占比' = DIVIDE(CALCULATE([GMV], fact_orders[is_first_order] = TRUE()), [GMV])
+		formatString: 0.0%
+		displayFolder: 2 增长
+		lineageTag: 329529d2-867a-5f0b-90bb-d8b030a82430
+
+	measure '复购率' = DIVIDE(COUNTROWS(FILTER(VALUES(fact_orders[customer_unique_id]), CALCULATE(COUNTROWS(fact_orders), fact_orders[is_valid] = TRUE()) > 1)), [买家数])
+		formatString: 0.0%
+		displayFolder: 2 增长
+		lineageTag: e304f5bf-94ce-5ee7-9a49-7a6c20125c43
+
+	measure '准时送达率' = DIVIDE(CALCULATE(COUNTROWS(fact_orders), fact_orders[is_on_time] = TRUE()), CALCULATE(COUNTROWS(fact_orders), fact_orders[is_delivered] = TRUE()))
+		formatString: 0.0%
+		displayFolder: 3 履约体验
+		lineageTag: 9981e026-b651-5d50-9538-7ba4c64a3f4a
+
+	measure '平均配送天数' = CALCULATE(AVERAGE(fact_orders[delivery_days]), fact_orders[is_delivered] = TRUE())
+		formatString: 0.0
+		displayFolder: 3 履约体验
+		lineageTag: bab43d31-604c-5405-ac1e-803cad1807af
+
+	measure '平均评分' = AVERAGE(fact_orders[review_score])
+		formatString: 0.00
+		displayFolder: 3 履约体验
+		lineageTag: 54a342da-bde2-5788-8fcf-78525a09e32b
+
+	measure '差评率' = DIVIDE(CALCULATE(COUNTROWS(fact_orders), fact_orders[review_score] <= 2, NOT ISBLANK(fact_orders[review_score])), CALCULATE(COUNTROWS(fact_orders), NOT ISBLANK(fact_orders[review_score])))
+		formatString: 0.0%
+		displayFolder: 3 履约体验
+		lineageTag: 36df3e7a-1837-5c76-bce9-5924d6c8b1de
+
+	measure '运费占比' = DIVIDE(CALCULATE(SUM(fact_orders[freight_value]), fact_orders[is_valid] = TRUE()), [GMV])
+		formatString: 0.0%
+		displayFolder: 3 履约体验
+		lineageTag: 89cee275-d5f2-53ed-b690-c6f1bcfbf3d4
+
+	measure '品类GMV' = CALCULATE(SUM(fact_order_items[item_gmv]), fact_order_items[is_valid] = TRUE())
+		formatString: #,0
+		displayFolder: 4 品类
+		lineageTag: b4317ab5-c6f8-59ab-81d1-b8c3d9c02eaa
+
+	measure '品类GMV占比' = DIVIDE([品类GMV], CALCULATE([品类GMV], ALL(dim_product)))
+		formatString: 0.0%
+		displayFolder: 4 品类
+		lineageTag: f6adcdb8-c9e4-5b74-ab94-bf34af087e92
+
+	measure '留存率' = DIVIDE(SUM(cohort_retention[active_buyers]), SUM(cohort_retention[cohort_size]))
+		formatString: 0.0%
+		displayFolder: 5 留存
+		lineageTag: 8639a212-91ce-5632-b971-6dfaf6d1d804
+
+	measure '漏斗订单数' =
+			SWITCH(SELECTEDVALUE(funnel_stage[stage_no]),
+			    1, COUNTROWS(fact_orders),
+			    2, CALCULATE(COUNTROWS(fact_orders), fact_orders[is_approved] = TRUE()),
+			    3, CALCULATE(COUNTROWS(fact_orders), fact_orders[is_shipped] = TRUE()),
+			    4, CALCULATE(COUNTROWS(fact_orders), fact_orders[is_delivered] = TRUE()),
+			    5, CALCULATE(COUNTROWS(fact_orders), fact_orders[is_delivered] = TRUE(), fact_orders[review_score] >= 4))
+		formatString: #,0
+		displayFolder: 3 履约体验
+		lineageTag: d956e95f-5ab5-5a53-aa35-fa131c1dd05c
+
+	measure '漏斗转化率' = DIVIDE([漏斗订单数], CALCULATE([漏斗订单数], REMOVEFILTERS(funnel_stage), funnel_stage[stage_no] = 1))
+		formatString: 0.0%
+		displayFolder: 3 履约体验
+		lineageTag: bb0876a3-cb2a-534d-bdc9-11b04be2a57f
+
+	column 占位
+		dataType: string
+		isHidden
+		summarizeBy: none
+		lineageTag: 002a49f8-c4d6-5f16-9835-cc4326bd8123
+		sourceColumn: 占位
+
+	partition 指标 = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [占位 = text], {})
+				in
+				    Source

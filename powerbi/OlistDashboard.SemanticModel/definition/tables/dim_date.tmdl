@@ -1,0 +1,66 @@
+table dim_date
+	lineageTag: b81bb7e1-95d6-543f-bdb4-9b866b07e3fa
+	dataCategory: Time
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		isKey
+		lineageTag: 9d6b57d6-77f7-533f-8e73-655af486805f
+		sourceColumn: date
+
+	column year
+		dataType: int64
+		summarizeBy: none
+		lineageTag: 3a70ae65-6d4b-52e4-bee8-2826c5c161d5
+		sourceColumn: year
+
+	column month
+		dataType: int64
+		summarizeBy: none
+		lineageTag: 11269669-fcae-53cb-9cfa-8d81374cabef
+		sourceColumn: month
+
+	column year_month
+		dataType: string
+		summarizeBy: none
+		lineageTag: 5a6702e2-ef55-51c7-9e50-fa592fd80ca9
+		sourceColumn: year_month
+
+	column month_start
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		lineageTag: 8ea776ec-d5b9-5072-8e4e-0e3652fa44d2
+		sourceColumn: month_start
+
+	column quarter
+		dataType: string
+		summarizeBy: none
+		lineageTag: 7844cb0f-4f1e-581e-b794-37977da915fc
+		sourceColumn: quarter
+
+	column weekday_no
+		dataType: int64
+		summarizeBy: none
+		lineageTag: d4b17ca6-0583-5189-a0a1-7dada8c79cb8
+		sourceColumn: weekday_no
+
+	column weekday
+		dataType: string
+		summarizeBy: none
+		sortByColumn: weekday_no
+		lineageTag: b435b695-00fd-59b2-9c30-662261d026f7
+		sourceColumn: weekday
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_date.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"date", type date}, {"year", Int64.Type}, {"month", Int64.Type}, {"year_month", type text}, {"month_start", type date}, {"quarter", type text}, {"weekday_no", Int64.Type}, {"weekday", type text}}, "en-US")
+				in
+				    Typed

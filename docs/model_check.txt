@@ -1,0 +1,57 @@
+﻿database: f44d8560-027f-4e34-acad-6d47558589cc (port 58055)
+
+== row counts
+Value1 | Value2
+fact_orders | 99092
+fact_order_items | 112279
+dim_customer | 95774
+dim_product | 32951
+dim_date | 608
+cohort_retention | 207
+
+== headline KPIs
+GMV | orders | buyers | AOV | on_time | avg_review | bad_review | repeat | freight_share | new_buyer_gmv
+15,688,396.6400 | 97910 | 94707 | 160.2328 | 0.9321 | 4.0886 | 0.1463 | 0.0304 | 0.1427 | 0.9693
+
+== monthly (last 4)
+dim_date[year_month | GMV | MoM | YoY | buyers
+2018-05 | 1,146,158.0600 | -0.0091 | 0.9669 | 6775
+2018-07 | 1,039,816.8400 | 0.0188 | 0.7966 | 6172
+2018-06 | 1,020,606.1000 | -0.1095 | 1.0426 | 6106
+2018-08 | 997,040.0300 | -0.0411 | 0.5061 | 6380
+
+== category top 3
+dim_product[category_cn | GMV | share
+床品卫浴餐桌 | 1,239,779.5500 | 0.0790
+手表礼品 | 1,294,824.4300 | 0.0825
+健康美妆 | 1,432,395.0000 | 0.0913
+
+== lateness vs review
+fact_orders[lateness_bucket | avg_review | orders
+准时或提前 | 4.2912 | 89672
+延迟7天以上 | 1.6967 | 2860
+未送达 | 1.7542 | 2889
+延迟1-3天 | 3.2907 | 1869
+延迟4-7天 | 2.1030 | 1802
+
+== funnel
+funnel_stage[stage | orders | conv
+1 下单 | 99092 | 1.0000
+2 支付审核 | 98957 | 0.9986
+3 发货 | 97376 | 0.9827
+4 送达 | 96203 | 0.9708
+5 好评(≥4星) | 75437 | 0.7613
+
+== region
+dim_customer[region | GMV | days | on_time
+中西部 | 1,011,882.3200 | 14.9446 | 0.9348
+东南部 | 10,131,757.2100 | 10.6673 | 0.9387
+东北部 | 1,865,452.4500 | 19.9229 | 0.8725
+南部 | 2,271,195.5400 | 13.9659 | 0.9408
+北部 | 408,109.1200 | 22.5335 | 0.9140
+
+== retention M1-M3
+cohort_retention[months_since | retention
+1 | 0.0049
+2 | 0.0034
+3 | 0.0026

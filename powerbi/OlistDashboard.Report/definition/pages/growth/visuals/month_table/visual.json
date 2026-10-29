@@ -1,0 +1,183 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "month_table",
+  "position": {
+    "x": 20,
+    "y": 435,
+    "z": 9,
+    "width": 840,
+    "height": 275
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date"
+                    }
+                  },
+                  "Property": "year_month"
+                }
+              },
+              "queryRef": "dim_date.year_month",
+              "nativeQueryRef": "year_month",
+              "displayName": "月份"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "GMV"
+                }
+              },
+              "queryRef": "指标.GMV",
+              "nativeQueryRef": "GMV"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "GMV环比"
+                }
+              },
+              "queryRef": "指标.GMV环比",
+              "nativeQueryRef": "GMV环比"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "GMV同比"
+                }
+              },
+              "queryRef": "指标.GMV同比",
+              "nativeQueryRef": "GMV同比"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "买家数"
+                }
+              },
+              "queryRef": "指标.买家数",
+              "nativeQueryRef": "买家数"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "新买家数"
+                }
+              },
+              "queryRef": "指标.新买家数",
+              "nativeQueryRef": "新买家数"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "人均订单数"
+                }
+              },
+              "queryRef": "指标.人均订单数",
+              "nativeQueryRef": "人均订单数"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "指标"
+                    }
+                  },
+                  "Property": "客单价"
+                }
+              },
+              "queryRef": "指标.客单价",
+              "nativeQueryRef": "客单价"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'月度指标明细'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#252423'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

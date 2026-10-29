@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "insight_growth",
+  "position": {
+    "x": 875,
+    "y": 435,
+    "z": 10,
+    "width": 385,
+    "height": 275
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "关键发现",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 2018.01–08 对比 2017.01–08:GMV +140%,买家数 +139%,人均订单数 1.029 → 1.023,客单价 R$158 → R$161。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 新买家贡献约 97% 的 GMV,增长几乎完全依赖新客获取。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 建议:增长策略应从'拉新'转向'复购',见'用户留存'页。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

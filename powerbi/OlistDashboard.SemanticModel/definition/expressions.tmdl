@@ -1,0 +1,2 @@
+expression DataFolder = "D:\18463\Desktop\olist-bi-dashboard\data\model\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 9d292474-c3f2-5fec-9159-f71dcb82422b

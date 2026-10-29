@@ -1,0 +1,56 @@
+table dim_product
+	lineageTag: fe9a119a-6626-566e-ba89-a8f02130d48b
+
+	column product_id
+		dataType: string
+		summarizeBy: none
+		lineageTag: 0f437c9f-9958-53d3-80a1-7eb09e570aea
+		sourceColumn: product_id
+
+	column category_pt
+		dataType: string
+		summarizeBy: none
+		isHidden
+		lineageTag: 5730aec7-b11d-5dfb-9637-3246e903efef
+		sourceColumn: category_pt
+
+	column category_en
+		dataType: string
+		summarizeBy: none
+		lineageTag: 33065ec9-0017-5b25-9aa5-428319b07b90
+		sourceColumn: category_en
+
+	column product_weight_g
+		dataType: double
+		summarizeBy: none
+		lineageTag: ba8dcaa0-74fd-50df-aa4b-f3abee01b055
+		sourceColumn: product_weight_g
+
+	column product_photos_qty
+		dataType: double
+		summarizeBy: none
+		lineageTag: aa6b8806-913f-5401-90f1-04fcfaa4cdff
+		sourceColumn: product_photos_qty
+
+	column category_cn
+		dataType: string
+		summarizeBy: none
+		lineageTag: 2ed169b7-2a13-5027-bf39-12f56909dedf
+		sourceColumn: category_cn
+
+	column category_group
+		dataType: string
+		summarizeBy: none
+		lineageTag: baf18c99-9a11-5654-9034-ba61d9dae0b6
+		sourceColumn: category_group
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_product.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"product_id", type text}, {"category_pt", type text}, {"category_en", type text}, {"product_weight_g", type number}, {"product_photos_qty", type number}, {"category_cn", type text}, {"category_group", type text}}, "en-US")
+				in
+				    Typed

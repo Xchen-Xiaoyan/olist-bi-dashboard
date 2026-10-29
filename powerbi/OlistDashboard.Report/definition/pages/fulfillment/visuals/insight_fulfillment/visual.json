@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "insight_fulfillment",
+  "position": {
+    "x": 870,
+    "y": 455,
+    "z": 10,
+    "width": 390,
+    "height": 255
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "关键发现",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 准时订单平均 4.29 分,延迟订单仅 2.27 分;延迟超 7 天降至 1.70 分,未送达订单 1.75 分。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 2017.11 黑五与 2018.02–03 准时率跌至 81%–88%,评分同步走低。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 北部、东北部平均配送 20–23 天,运费占比 26%–28%,评分最低。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• 漏斗最大流失在'送达 → 好评'(约 22%)。",
+                    "textStyle": {
+                      "fontSize": "10pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

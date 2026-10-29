@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+data/raw/
+*.pbix
+powerbi/**/.pbi/localSettings.json
+powerbi/**/.pbi/cache.abf
+data/model/

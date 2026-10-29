@@ -1,0 +1,23 @@
+table funnel_stage
+	lineageTag: 8e78534b-9312-5514-ba8b-1778fab09938
+
+	column stage_no
+		dataType: int64
+		summarizeBy: none
+		lineageTag: dc2ab4db-2a03-5f41-aaee-682c4375519a
+		sourceColumn: stage_no
+
+	column stage
+		dataType: string
+		summarizeBy: none
+		sortByColumn: stage_no
+		lineageTag: 3611a012-36cd-5750-b3a2-8b456237a2d3
+		sourceColumn: stage
+
+	partition funnel_stage = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [stage_no = Int64.Type, stage = text], {{1, "1 下单"}, {2, "2 支付审核"}, {3, "3 发货"}, {4, "4 送达"}, {5, "5 好评(≥4星)"}})
+				in
+				    Source

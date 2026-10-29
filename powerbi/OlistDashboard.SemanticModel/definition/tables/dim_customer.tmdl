@@ -1,0 +1,51 @@
+table dim_customer
+	lineageTag: 3bb5b4aa-54bf-5a7c-a914-7669aa952b1e
+
+	column customer_unique_id
+		dataType: string
+		summarizeBy: none
+		lineageTag: 9577c68f-ad55-5f19-80eb-ebd241627d94
+		sourceColumn: customer_unique_id
+
+	column state
+		dataType: string
+		summarizeBy: none
+		lineageTag: 92aaf050-38a5-5efd-8a1f-43650d691551
+		sourceColumn: state
+
+	column city
+		dataType: string
+		summarizeBy: none
+		lineageTag: da28b0d4-15e4-548c-b25d-9bd3e8e839aa
+		sourceColumn: city
+
+	column first_purchase_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		lineageTag: 709cc6de-2b0d-58a3-8467-8795354b843c
+		sourceColumn: first_purchase_date
+
+	column region
+		dataType: string
+		summarizeBy: none
+		lineageTag: 2b80567a-19ce-5733-b79f-9cae49c6bfd8
+		sourceColumn: region
+
+	column cohort_month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		lineageTag: 2e4aa2a3-fe6d-5b70-9bac-9350e1ee9bf7
+		sourceColumn: cohort_month
+
+	partition dim_customer = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_customer.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"customer_unique_id", type text}, {"state", type text}, {"city", type text}, {"first_purchase_date", type date}, {"region", type text}, {"cohort_month", type date}}, "en-US")
+				in
+				    Typed

@@ -1,0 +1,50 @@
+table cohort_retention
+	lineageTag: 7f1c1192-ac52-5b4e-a168-bf943815cc52
+
+	column cohort_month
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		lineageTag: 6783114f-ee0b-5c4e-8bc3-36e412de125f
+		sourceColumn: cohort_month
+
+	column months_since
+		dataType: int64
+		summarizeBy: none
+		lineageTag: b972ee63-7474-554f-87b3-9fc2e2be1f6b
+		sourceColumn: months_since
+
+	column active_buyers
+		dataType: int64
+		summarizeBy: none
+		lineageTag: 0b10a4e8-54ce-51dc-91ab-54f795c18e03
+		sourceColumn: active_buyers
+
+	column cohort_size
+		dataType: int64
+		summarizeBy: none
+		lineageTag: c8983f32-eb22-5f75-98c3-7d10d77c4476
+		sourceColumn: cohort_size
+
+	column retention_rate
+		dataType: double
+		summarizeBy: none
+		lineageTag: 6ee555f1-9be5-5d36-8b29-6dab41f6586e
+		sourceColumn: retention_rate
+
+	column cohort_label
+		dataType: string
+		summarizeBy: none
+		lineageTag: 606962ce-fcf6-52c0-a68a-bbf02786dcad
+		sourceColumn: cohort_label
+
+	partition cohort_retention = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "cohort_retention.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"cohort_month", type date}, {"months_since", Int64.Type}, {"active_buyers", Int64.Type}, {"cohort_size", Int64.Type}, {"retention_rate", type number}, {"cohort_label", type text}}, "en-US")
+				in
+				    Typed
