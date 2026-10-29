@@ -1,4 +1,27 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.0.0/schema.json",
-  "themeCollection": {}
+  "themeCollection": {
+    "customTheme": {
+      "name": "OlistTheme.json",
+      "type": "RegisteredResources",
+      "reportVersionAtImport": {
+        "visual": "2.4.0",
+        "page": "2.0.0",
+        "report": "3.0.0"
+      }
+    }
+  },
+  "resourcePackages": [
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "OlistTheme.json",
+          "path": "OlistTheme.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ]
 }

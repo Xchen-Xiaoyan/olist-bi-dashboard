@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "insight_growth",
   "position": {
-    "x": 875,
-    "y": 435,
-    "z": 10,
-    "width": 385,
-    "height": 275
+    "x": 854,
+    "y": 447,
+    "z": 12,
+    "width": 406,
+    "height": 310
   },
   "visual": {
     "visualType": "textbox",
@@ -50,7 +50,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "• 建议:增长策略应从'拉新'转向'复购',见'用户留存'页。",
+                    "value": "• 建议:增长策略应从'拉新'转向'复购',见'用户分层'与'用户留存'页。",
                     "textStyle": {
                       "fontSize": "10pt"
                     }

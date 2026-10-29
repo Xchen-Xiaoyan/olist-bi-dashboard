@@ -7,6 +7,7 @@ relationship ac9e9f7d-5974-57db-85c0-87ceff9fbfc7
 	toColumn: dim_customer.customer_unique_id
 
 relationship 60ec381c-c879-56d7-a798-5f44693815dd
+	crossFilteringBehavior: bothDirections
 	fromColumn: fact_order_items.order_id
 	toColumn: fact_orders.order_id
 

@@ -3,10 +3,10 @@
   "name": "funnel",
   "position": {
     "x": 20,
-    "y": 455,
-    "z": 8,
-    "width": 410,
-    "height": 255
+    "y": 477,
+    "z": 10,
+    "width": 405,
+    "height": 280
   },
   "visual": {
     "visualType": "funnel",
@@ -89,7 +89,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }

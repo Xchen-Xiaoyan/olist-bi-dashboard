@@ -21,6 +21,30 @@ RAW, OUT = ROOT / "data" / "raw", ROOT / "data" / "model"
 START, END = "2017-01-01", "2018-09-01"
 
 
+RFM_SEGMENTS = [  # (order, name): F almost always 1 here, so Recency x Monetary carries the split
+    (1, "复购客户"), (2, "近期高价值"), (3, "近期一般"), (4, "高价值待唤醒"), (5, "一般待唤醒"), (6, "已流失")]
+
+
+def rfm_segments(fact_orders: pd.DataFrame) -> pd.DataFrame:
+    """Recency (days to 2018-09-01), Frequency (valid orders), Monetary (GMV) and a rule-based segment."""
+    v = fact_orders[fact_orders.is_valid]
+    g = v.groupby("customer_unique_id").agg(last=("purchase_date", "max"), frequency=("order_id", "count"),
+                                           monetary=("order_value", "sum")).reset_index()
+    g["recency_days"] = (pd.Timestamp(END) - pd.to_datetime(g["last"])).dt.days
+    high = g.monetary >= g.monetary.quantile(0.75)
+    recent, mid = g.recency_days <= 90, g.recency_days.between(91, 270)
+    seg = pd.Series(6, index=g.index)                          # 已流失: last order > 270 days ago
+    seg[mid] = 5
+    seg[mid & high] = 4
+    seg[recent] = 3
+    seg[recent & high] = 2
+    seg[g.frequency >= 2] = 1
+    names = dict(RFM_SEGMENTS)
+    g["rfm_order"] = seg
+    g["rfm_segment"] = seg.map(names)
+    return g[["customer_unique_id", "recency_days", "frequency", "monetary", "rfm_segment", "rfm_order"]]
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     c = duckdb.connect()
@@ -111,6 +135,10 @@ def main():
     first = fact_orders.groupby("customer_unique_id").purchase_date.min().rename("first_purchase_date")
     dim_customer = dim_customer.merge(first, on="customer_unique_id", how="inner").merge(regions, on="state", how="left")
     dim_customer["cohort_month"] = pd.to_datetime(dim_customer.first_purchase_date).dt.to_period("M").dt.to_timestamp()
+    dim_customer = dim_customer.merge(rfm_segments(fact_orders), on="customer_unique_id", how="left")
+    # Buyers whose every order was canceled/unavailable have no RFM values; label them explicitly.
+    dim_customer["rfm_segment"] = dim_customer.rfm_segment.fillna("仅取消订单")
+    dim_customer["rfm_order"] = dim_customer.rfm_order.fillna(7).astype(int)
 
     dim_seller = c.sql("select seller_id, seller_state state, seller_city city from raw_sellers").df().merge(
         regions, on="state", how="left")

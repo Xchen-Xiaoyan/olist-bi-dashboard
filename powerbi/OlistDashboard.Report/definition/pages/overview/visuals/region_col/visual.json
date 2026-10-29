@@ -3,10 +3,10 @@
   "name": "region_col",
   "position": {
     "x": 20,
-    "y": 455,
-    "z": 9,
-    "width": 410,
-    "height": 255
+    "y": 522,
+    "z": 12,
+    "width": 400,
+    "height": 230
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -107,7 +107,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }

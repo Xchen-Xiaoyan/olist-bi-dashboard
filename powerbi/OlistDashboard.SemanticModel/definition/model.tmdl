@@ -12,4 +12,5 @@ ref table dim_product
 ref table dim_seller
 ref table cohort_retention
 ref table funnel_stage
+ref table metric_switch
 ref table '指标'

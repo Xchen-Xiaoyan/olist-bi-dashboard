@@ -3,10 +3,10 @@
   "name": "header",
   "position": {
     "x": 20,
-    "y": 8,
+    "y": 6,
     "z": 0,
-    "width": 1240,
-    "height": 50
+    "width": 470,
+    "height": 54
   },
   "visual": {
     "visualType": "textbox",
@@ -19,9 +19,9 @@
               {
                 "textRuns": [
                   {
-                    "value": "Olist 巴西电商经营看板 | 2017.01 – 2018.08 | 金额单位:雷亚尔 (R$)",
+                    "value": "Olist 电商经营看板 | 金额单位 R$",
                     "textStyle": {
-                      "fontSize": "16pt",
+                      "fontSize": "14pt",
                       "fontWeight": "bold"
                     }
                   }

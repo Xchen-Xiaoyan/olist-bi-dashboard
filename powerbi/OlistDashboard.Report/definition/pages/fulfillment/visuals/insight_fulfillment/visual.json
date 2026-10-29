@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "insight_fulfillment",
   "position": {
-    "x": 870,
-    "y": 455,
-    "z": 10,
-    "width": 390,
-    "height": 255
+    "x": 854,
+    "y": 477,
+    "z": 12,
+    "width": 406,
+    "height": 280
   },
   "visual": {
     "visualType": "textbox",
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "• 准时订单平均 4.29 分,延迟订单仅 2.27 分;延迟超 7 天降至 1.70 分,未送达订单 1.75 分。",
+                    "value": "• 准时订单平均 4.29 分,延迟订单 2.27 分;延迟超 7 天 1.70 分,未送达 1.75 分。",
                     "textStyle": {
                       "fontSize": "10pt"
                     }

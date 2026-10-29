@@ -39,6 +39,38 @@ table dim_customer
 		lineageTag: 2e4aa2a3-fe6d-5b70-9bac-9350e1ee9bf7
 		sourceColumn: cohort_month
 
+	column recency_days
+		dataType: double
+		summarizeBy: none
+		lineageTag: 044fb80a-4875-5bc2-bb36-e2a1f37483c1
+		sourceColumn: recency_days
+
+	column frequency
+		dataType: double
+		summarizeBy: none
+		lineageTag: 14d49e5b-215c-5ed4-9b88-d7f548a570ba
+		sourceColumn: frequency
+
+	column monetary
+		dataType: double
+		summarizeBy: none
+		lineageTag: 6ba6ed89-42ae-5e26-b483-d36e32508dfb
+		sourceColumn: monetary
+
+	column rfm_segment
+		dataType: string
+		summarizeBy: none
+		sortByColumn: rfm_order
+		lineageTag: 67df13e9-0c2a-5a09-b3e1-55a8795e6bd8
+		sourceColumn: rfm_segment
+
+	column rfm_order
+		dataType: int64
+		summarizeBy: none
+		isHidden
+		lineageTag: 4f957793-a164-57d0-82f9-44ba88cbd562
+		sourceColumn: rfm_order
+
 	partition dim_customer = m
 		mode: import
 		source =
@@ -46,6 +78,6 @@ table dim_customer
 				    Source = Csv.Document(File.Contents(DataFolder & "dim_customer.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
 				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
-				    Typed = Table.TransformColumnTypes(Blanks, {{"customer_unique_id", type text}, {"state", type text}, {"city", type text}, {"first_purchase_date", type date}, {"region", type text}, {"cohort_month", type date}}, "en-US")
+				    Typed = Table.TransformColumnTypes(Blanks, {{"customer_unique_id", type text}, {"state", type text}, {"city", type text}, {"first_purchase_date", type date}, {"region", type text}, {"cohort_month", type date}, {"recency_days", type number}, {"frequency", type number}, {"monetary", type number}, {"rfm_segment", type text}, {"rfm_order", Int64.Type}}, "en-US")
 				in
 				    Typed

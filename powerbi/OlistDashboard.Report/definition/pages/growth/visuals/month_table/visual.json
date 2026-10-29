@@ -3,10 +3,10 @@
   "name": "month_table",
   "position": {
     "x": 20,
-    "y": 435,
-    "z": 9,
-    "width": 840,
-    "height": 275
+    "y": 447,
+    "z": 11,
+    "width": 822,
+    "height": 310
   },
   "visual": {
     "visualType": "tableEx",
@@ -169,7 +169,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }

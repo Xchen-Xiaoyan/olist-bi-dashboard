@@ -3,10 +3,10 @@
   "name": "header",
   "position": {
     "x": 20,
-    "y": 8,
+    "y": 6,
     "z": 0,
-    "width": 1240,
-    "height": 50
+    "width": 470,
+    "height": 54
   },
   "visual": {
     "visualType": "textbox",
@@ -19,9 +19,9 @@
               {
                 "textRuns": [
                   {
-                    "value": "用户留存:按首购月份的同期群分析",
+                    "value": "按首购月份的同期群留存",
                     "textStyle": {
-                      "fontSize": "16pt",
+                      "fontSize": "14pt",
                       "fontWeight": "bold"
                     }
                   }

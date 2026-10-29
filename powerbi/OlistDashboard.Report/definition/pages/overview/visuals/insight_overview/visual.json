@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "insight_overview",
   "position": {
-    "x": 445,
-    "y": 540,
-    "z": 11,
-    "width": 395,
-    "height": 170
+    "x": 435,
+    "y": 592,
+    "z": 14,
+    "width": 405,
+    "height": 160
   },
   "visual": {
     "visualType": "textbox",
@@ -50,17 +50,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "• 前 7 个品类贡献约 50% 的 GMV,健康美妆排名第一。",
-                    "textStyle": {
-                      "fontSize": "10pt"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "• 东南部贡献约 65% 的 GMV。",
+                    "value": "• 前 7 个品类贡献约 50% 的 GMV;东南部贡献约 65% 的 GMV。",
                     "textStyle": {
                       "fontSize": "10pt"
                     }

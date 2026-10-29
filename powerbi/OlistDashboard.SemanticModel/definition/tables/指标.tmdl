@@ -88,18 +88,74 @@ table '指标'
 
 	measure '品类GMV' = CALCULATE(SUM(fact_order_items[item_gmv]), fact_order_items[is_valid] = TRUE())
 		formatString: #,0
-		displayFolder: 4 品类
+		displayFolder: 4 品类与卖家
 		lineageTag: b4317ab5-c6f8-59ab-81d1-b8c3d9c02eaa
 
 	measure '品类GMV占比' = DIVIDE([品类GMV], CALCULATE([品类GMV], ALL(dim_product)))
 		formatString: 0.0%
-		displayFolder: 4 品类
+		displayFolder: 4 品类与卖家
 		lineageTag: f6adcdb8-c9e4-5b74-ab94-bf34af087e92
+
+	measure '卖家数' = CALCULATE(DISTINCTCOUNT(fact_order_items[seller_id]), fact_order_items[is_valid] = TRUE())
+		formatString: #,0
+		displayFolder: 4 品类与卖家
+		lineageTag: 748344ea-7091-519b-884e-231e72ace5db
+
+	measure '卖家GMV' = [品类GMV]
+		formatString: #,0
+		displayFolder: 4 品类与卖家
+		lineageTag: 83dfc967-7771-512c-8e82-a268b7a13c54
+
+	measure '人均卖家GMV' = DIVIDE([品类GMV], [卖家数])
+		formatString: #,0
+		displayFolder: 4 品类与卖家
+		lineageTag: d560ed2e-4c87-503d-a726-389a650c6b40
+
+	measure '头部10%卖家GMV占比' =
+			VAR n_sellers = [卖家数]
+			VAR top_sellers = TOPN(ROUNDUP(n_sellers * 0.1, 0), VALUES(fact_order_items[seller_id]), [品类GMV], DESC)
+			RETURN DIVIDE(CALCULATE([品类GMV], top_sellers), [品类GMV])
+		formatString: 0.0%
+		displayFolder: 4 品类与卖家
+		lineageTag: e25650db-23ce-5592-87bf-0a1011a30076
+
+	measure '延迟订单数' = CALCULATE(COUNTROWS(fact_orders), fact_orders[is_on_time] = FALSE(), fact_orders[is_delivered] = TRUE())
+		formatString: #,0
+		displayFolder: 3 履约体验
+		lineageTag: beefa43e-02f7-5b94-841e-05393ea1d306
 
 	measure '留存率' = DIVIDE(SUM(cohort_retention[active_buyers]), SUM(cohort_retention[cohort_size]))
 		formatString: 0.0%
-		displayFolder: 5 留存
+		displayFolder: 5 留存与分层
 		lineageTag: 8639a212-91ce-5632-b971-6dfaf6d1d804
+
+	measure '买家占比' = DIVIDE([买家数], CALCULATE([买家数], ALL(dim_customer)))
+		formatString: 0.0%
+		displayFolder: 5 留存与分层
+		lineageTag: 2f67934f-6db7-54c8-93ca-722b6da70db6
+
+	measure 'GMV占比' = DIVIDE([GMV], CALCULATE([GMV], ALL(dim_customer)))
+		formatString: 0.0%
+		displayFolder: 5 留存与分层
+		lineageTag: 0fddd2b5-7889-5b14-a635-1a9e5f7085ce
+
+	measure '人均消费' = DIVIDE([GMV], [买家数])
+		formatString: #,0.0
+		displayFolder: 5 留存与分层
+		lineageTag: 9f0c1ec6-3c64-5899-9844-16aa342dbfca
+
+	measure '所选指标' = SWITCH(SELECTEDVALUE(metric_switch[metric_no], 1), 1, [GMV], 2, [订单数], 3, [买家数], 4, [客单价])
+		formatString: #,0
+		displayFolder: 6 交互
+		lineageTag: 485da63d-8b6c-591d-b8f5-d6b08c781cdf
+
+	measure '所选指标标题' = "月度 " & SELECTEDVALUE(metric_switch[metric], "GMV") & " 趋势(可切换指标)"
+		displayFolder: 6 交互
+		lineageTag: a72588fb-2247-5fd8-9bcc-205dfefcbabb
+
+	measure '当前品类' = "品类详情:" & SELECTEDVALUE(dim_product[category_cn], "全部品类")
+		displayFolder: 6 交互
+		lineageTag: 5793f577-ca37-5ec1-bc9b-168136d2687f
 
 	measure '漏斗订单数' =
 			SWITCH(SELECTEDVALUE(funnel_stage[stage_no]),

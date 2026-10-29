@@ -4,7 +4,11 @@
     "overview",
     "growth",
     "fulfillment",
-    "retention"
+    "sellers",
+    "rfm",
+    "retention",
+    "category_detail",
+    "tooltip_month"
   ],
   "activePageName": "overview"
 }

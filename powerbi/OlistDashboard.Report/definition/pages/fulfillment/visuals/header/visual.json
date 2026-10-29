@@ -3,10 +3,10 @@
   "name": "header",
   "position": {
     "x": 20,
-    "y": 8,
+    "y": 6,
     "z": 0,
-    "width": 1240,
-    "height": 50
+    "width": 470,
+    "height": 54
   },
   "visual": {
     "visualType": "textbox",
@@ -19,9 +19,9 @@
               {
                 "textRuns": [
                   {
-                    "value": "履约与体验:配送时效决定用户评分",
+                    "value": "配送时效决定用户评分",
                     "textStyle": {
-                      "fontSize": "16pt",
+                      "fontSize": "14pt",
                       "fontWeight": "bold"
                     }
                   }

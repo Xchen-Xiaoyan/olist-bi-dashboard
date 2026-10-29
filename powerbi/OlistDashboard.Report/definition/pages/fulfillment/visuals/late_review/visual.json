@@ -3,9 +3,9 @@
   "name": "late_review",
   "position": {
     "x": 20,
-    "y": 170,
-    "z": 6,
-    "width": 410,
+    "y": 192,
+    "z": 8,
+    "width": 405,
     "height": 270
   },
   "visual": {
@@ -89,7 +89,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }

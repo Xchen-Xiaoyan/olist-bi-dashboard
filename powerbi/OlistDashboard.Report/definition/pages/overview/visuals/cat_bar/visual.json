@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "cat_bar",
   "position": {
-    "x": 860,
-    "y": 170,
-    "z": 8,
-    "width": 400,
-    "height": 540
+    "x": 855,
+    "y": 192,
+    "z": 11,
+    "width": 405,
+    "height": 476
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -84,7 +84,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'品类 GMV 排名'"
+                  "Value": "'品类 GMV 排名(右键品类可钻取详情)'"
                 }
               }
             },
@@ -107,7 +107,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "aov_trend",
   "position": {
-    "x": 870,
-    "y": 170,
-    "z": 8,
-    "width": 390,
-    "height": 250
+    "x": 854,
+    "y": 192,
+    "z": 10,
+    "width": 406,
+    "height": 240
   },
   "visual": {
     "visualType": "lineChart",
@@ -89,7 +89,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }

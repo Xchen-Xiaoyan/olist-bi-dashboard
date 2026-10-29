@@ -66,3 +66,34 @@ select d.month_start, avg(case when o.is_on_time then 1.0 else 0 end) on_time_ra
        avg(o.review_score) avg_review, avg(o.delivery_days) avg_days
 from fact_orders o join dim_date d on o.purchase_date = d.date
 where o.is_delivered group by 1 order by 1;
+
+-- name: seller_concentration
+with s as (
+    select seller_id, sum(item_gmv) gmv from fact_order_items where is_valid group by 1),
+r as (select *, row_number() over (order by gmv desc) rk, count(*) over () n from s)
+select max(n) sellers,
+       sum(case when rk <= ceil(n * 0.1) then gmv end) / sum(gmv) top10pct_share,
+       sum(case when rk <= ceil(n * 0.2) then gmv end) / sum(gmv) top20pct_share,
+       median(gmv) median_seller_gmv
+from r;
+
+-- name: late_orders_by_seller_state
+select s.state seller_state, count(distinct o.order_id) delivered_orders,
+       count(distinct case when not o.is_on_time then o.order_id end) late_orders,
+       count(distinct case when not o.is_on_time then o.order_id end) * 1.0 / count(distinct o.order_id) late_rate
+from fact_order_items i join fact_orders o using (order_id) join dim_seller s using (seller_id)
+where o.is_delivered group by 1 having count(distinct o.order_id) > 500 order by late_orders desc limit 8;
+
+-- name: late_order_concentration
+-- share of late orders caused by the 10% of sellers with the most late orders
+with s as (
+    select i.seller_id, count(distinct case when not o.is_on_time then o.order_id end) late
+    from fact_order_items i join fact_orders o using (order_id) where o.is_delivered group by 1),
+r as (select *, row_number() over (order by late desc) rk, count(*) over () n from s)
+select sum(case when rk <= ceil(n * 0.1) then late end) * 1.0 / sum(late) top10pct_seller_late_share from r;
+
+-- name: rfm
+select c.rfm_order, c.rfm_segment, count(*) buyers, count(*) * 1.0 / sum(count(*)) over () buyer_share,
+       sum(c.monetary) gmv, sum(c.monetary) / sum(sum(c.monetary)) over () gmv_share,
+       avg(c.monetary) avg_monetary, avg(c.recency_days) avg_recency
+from dim_customer c where c.rfm_segment is not null group by 1, 2 order by 1;

@@ -21,6 +21,11 @@ $queries = [ordered]@{
     "funnel" = 'EVALUATE SUMMARIZECOLUMNS(funnel_stage[stage], "orders", [漏斗订单数], "conv", [漏斗转化率])'
     "region" = 'EVALUATE SUMMARIZECOLUMNS(dim_customer[region], "GMV", [GMV], "days", [平均配送天数], "on_time", [准时送达率])'
     "retention M1-M3" = 'EVALUATE SUMMARIZECOLUMNS(cohort_retention[months_since], FILTER(VALUES(cohort_retention[months_since]), cohort_retention[months_since] IN {1, 2, 3}), "retention", [留存率])'
+    "sellers" = 'EVALUATE ROW("sellers", [卖家数], "top10_share", [头部10%卖家GMV占比], "gmv_per_seller", [人均卖家GMV], "late_orders", [延迟订单数])'
+    "seller SP (bidirectional filter)" = 'EVALUATE CALCULATETABLE(ROW("late_orders", [延迟订单数], "on_time", [准时送达率]), dim_seller[state] = "SP")'
+    "rfm" = 'EVALUATE SUMMARIZECOLUMNS(dim_customer[rfm_segment], "buyers", [买家数], "buyer_share", [买家占比], "gmv_share", [GMV占比], "per_buyer", [人均消费])'
+    "metric switch" = 'EVALUATE SUMMARIZECOLUMNS(metric_switch[metric], "value", [所选指标], "title", [所选指标标题])'
+    "drill-through label" = 'EVALUATE CALCULATETABLE(ROW("label", [当前品类], "gmv", [品类GMV], "on_time", [准时送达率]), dim_product[category_cn] = "健康美妆")'
 }
 $out = @("database: $db (port $port)")
 foreach ($k in $queries.Keys) {

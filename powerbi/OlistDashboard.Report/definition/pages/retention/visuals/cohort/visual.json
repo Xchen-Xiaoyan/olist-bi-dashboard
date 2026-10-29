@@ -3,10 +3,10 @@
   "name": "cohort",
   "position": {
     "x": 20,
-    "y": 170,
-    "z": 4,
+    "y": 192,
+    "z": 6,
     "width": 840,
-    "height": 540
+    "height": 560
   },
   "visual": {
     "visualType": "pivotTable",
@@ -108,7 +108,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }
@@ -206,7 +206,7 @@
                           "max": {
                             "color": {
                               "Literal": {
-                                "Value": "'#118DFF'"
+                                "Value": "'#1A56DB'"
                               }
                             }
                           },

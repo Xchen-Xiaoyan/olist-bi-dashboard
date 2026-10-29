@@ -3,10 +3,10 @@
   "name": "insight_retention",
   "position": {
     "x": 875,
-    "y": 170,
-    "z": 5,
+    "y": 192,
+    "z": 7,
     "width": 385,
-    "height": 540
+    "height": 560
   },
   "visual": {
     "visualType": "textbox",

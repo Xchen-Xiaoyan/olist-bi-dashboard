@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "kpi_1",
   "position": {
-    "x": 270,
-    "y": 62,
-    "z": 2,
-    "width": 235,
-    "height": 95
+    "x": 437,
+    "y": 92,
+    "z": 4,
+    "width": 405,
+    "height": 88
   },
   "visual": {
     "visualType": "card",
@@ -41,6 +41,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "22D"
                 }
               }
             }

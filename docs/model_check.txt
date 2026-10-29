@@ -1,4 +1,4 @@
-﻿database: f44d8560-027f-4e34-acad-6d47558589cc (port 58055)
+﻿database: 01e5deb3-f8b6-43e6-817a-0f59377c228e (port 56282)
 
 == row counts
 Value1 | Value2
@@ -7,11 +7,11 @@ fact_order_items | 112279
 dim_customer | 95774
 dim_product | 32951
 dim_date | 608
-cohort_retention | 207
+cohort_retention | 161
 
 == headline KPIs
 GMV | orders | buyers | AOV | on_time | avg_review | bad_review | repeat | freight_share | new_buyer_gmv
-15,688,396.6400 | 97910 | 94707 | 160.2328 | 0.9321 | 4.0886 | 0.1463 | 0.0304 | 0.1427 | 0.9693
+15,688,396.6400 | 97910 | 94707 | 160.2328 | 0.9321 | 4.0886 | 0.1463 | 0.0304 | 0.1427 | 0.9695
 
 == monthly (last 4)
 dim_date[year_month | GMV | MoM | YoY | buyers
@@ -44,10 +44,10 @@ funnel_stage[stage | orders | conv
 
 == region
 dim_customer[region | GMV | days | on_time
-中西部 | 1,011,882.3200 | 14.9446 | 0.9348
 东南部 | 10,131,757.2100 | 10.6673 | 0.9387
 东北部 | 1,865,452.4500 | 19.9229 | 0.8725
 南部 | 2,271,195.5400 | 13.9659 | 0.9408
+中西部 | 1,011,882.3200 | 14.9446 | 0.9348
 北部 | 408,109.1200 | 22.5335 | 0.9140
 
 == retention M1-M3
@@ -55,3 +55,31 @@ cohort_retention[months_since | retention
 1 | 0.0049
 2 | 0.0034
 3 | 0.0026
+
+== sellers
+sellers | top10_share | gmv_per_seller | late_orders
+3029 | 0.6652 | 5,179.3980 | 6531
+
+== seller SP (bidirectional filter)
+late_orders | on_time
+5015 | 0.9268
+
+== rfm
+dim_customer[rfm_segment | buyers | buyer_share | gmv_share | per_buyer
+近期一般 | 13399 | 0.1415 | 0.0765 | 89.5478
+已流失 | 36900 | 0.3896 | 0.3813 | 162.1264
+一般待唤醒 | 28423 | 0.3001 | 0.1625 | 89.6666
+高价值待唤醒 | 8868 | 0.0936 | 0.2170 | 383.9099
+近期高价值 | 4242 | 0.0448 | 0.1062 | 392.7245
+复购客户 | 2875 | 0.0304 | 0.0565 | 308.5351
+
+== metric switch
+metric_switch[metric | value | title
+GMV | 15,688,396.6400 | 月度 GMV 趋势(可切换指标)
+订单数 | 97,910.0000 | 月度 订单数 趋势(可切换指标)
+买家数 | 94,707.0000 | 月度 买家数 趋势(可切换指标)
+客单价 | 160.2328 | 月度 客单价 趋势(可切换指标)
+
+== drill-through label
+label | gmv | on_time
+品类详情:健康美妆 | 1,432,395.0000 | 0.9249

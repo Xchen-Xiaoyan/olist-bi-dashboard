@@ -1,0 +1,23 @@
+table metric_switch
+	lineageTag: 4a9bd6dd-777d-5c2f-9502-182edf9c1639
+
+	column metric_no
+		dataType: int64
+		summarizeBy: none
+		lineageTag: e0aaa789-b2b3-5b3a-96fe-0d27c1dc4a96
+		sourceColumn: metric_no
+
+	column metric
+		dataType: string
+		summarizeBy: none
+		sortByColumn: metric_no
+		lineageTag: fdf0dad3-ae90-5cb4-8a81-635cd00ad61a
+		sourceColumn: metric
+
+	partition metric_switch = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [metric_no = Int64.Type, metric = text], {{1, "GMV"}, {2, "订单数"}, {3, "买家数"}, {4, "客单价"}})
+				in
+				    Source

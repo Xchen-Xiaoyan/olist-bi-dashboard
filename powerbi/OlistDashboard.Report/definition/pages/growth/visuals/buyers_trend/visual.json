@@ -3,10 +3,10 @@
   "name": "buyers_trend",
   "position": {
     "x": 20,
-    "y": 170,
-    "z": 6,
-    "width": 410,
-    "height": 250
+    "y": 192,
+    "z": 8,
+    "width": 405,
+    "height": 240
   },
   "visual": {
     "visualType": "lineChart",
@@ -89,9 +89,36 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ReportPage'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'tooltip_month'"
                 }
               }
             }

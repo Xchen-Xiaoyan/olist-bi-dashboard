@@ -1,15 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "gmv_trend",
+  "name": "rfm_gmv",
   "position": {
-    "x": 20,
-    "y": 170,
-    "z": 7,
-    "width": 820,
-    "height": 270
+    "x": 437,
+    "y": 192,
+    "z": 8,
+    "width": 405,
+    "height": 280
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "clusteredBarChart",
     "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
@@ -20,15 +20,15 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date"
+                      "Entity": "dim_customer"
                     }
                   },
-                  "Property": "month_start"
+                  "Property": "rfm_segment"
                 }
               },
-              "queryRef": "dim_date.month_start",
-              "nativeQueryRef": "month_start",
-              "displayName": "月份"
+              "queryRef": "dim_customer.rfm_segment",
+              "nativeQueryRef": "rfm_segment",
+              "displayName": "用户分层"
             }
           ]
         },
@@ -42,11 +42,11 @@
                       "Entity": "指标"
                     }
                   },
-                  "Property": "GMV"
+                  "Property": "GMV占比"
                 }
               },
-              "queryRef": "指标.GMV",
-              "nativeQueryRef": "GMV"
+              "queryRef": "指标.GMV占比",
+              "nativeQueryRef": "GMV占比"
             }
           ]
         }
@@ -66,7 +66,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'月度 GMV 趋势'"
+                  "Value": "'各分层 GMV 占比'"
                 }
               }
             },
@@ -89,7 +89,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#252423'"
+                      "Value": "'#111827'"
                     }
                   }
                 }
